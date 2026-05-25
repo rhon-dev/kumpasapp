@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kumpas/services/auth_service.dart';
 import 'package:kumpas/theme/app_theme.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -15,6 +17,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = context.watch<AuthService>();
+    final user = auth.currentUser;
+    final displayName = (user?.displayName?.trim().isNotEmpty ?? false)
+        ? user!.displayName!
+        : (user?.email?.split('@').first ?? 'Kumpas Learner');
+    final email = user?.email ?? '';
+    final photoURL = user?.photoURL;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -50,28 +60,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ],
                     ),
-                    child: const Icon(
-                      Icons.person,
-                      size: 48,
-                      color: Colors.white,
-                    ),
+                    child: photoURL != null
+                        ? ClipOval(
+                            child: Image.network(
+                              photoURL,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Icon(
+                                Icons.person,
+                                size: 48,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : const Icon(
+                            Icons.person,
+                            size: 48,
+                            color: Colors.white,
+                          ),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Maria Reyes',
+                    displayName,
                     style: AppTypography.headlineMedium(context),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'FSL Learner',
+                    email.isNotEmpty ? email : 'FSL Learner',
                     style: AppTypography.bodyMedium(context).copyWith(
                       color: AppColors.textSecondary,
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Edit Profile'),
                   ),
                 ],
               ),
@@ -440,20 +459,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Sign Out?'),
         content: const Text('Are you sure you want to sign out?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(dialogContext),
             child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Signed out successfully')),
-              );
+            onPressed: () async {
+              Navigator.pop(dialogContext);
+              try {
+                await context.read<AuthService>().signOut();
+              } catch (_) {}
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,

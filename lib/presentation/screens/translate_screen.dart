@@ -117,28 +117,6 @@ class _TranslateScreenState extends State<TranslateScreen>
               // Mode Selection Cards
               _buildTranslationModeCard(
                 context: context,
-                title: 'Sign to Text',
-                description:
-                    'Let the camera understand your signs and translate to text',
-                icon: Icons.videocam_outlined,
-                color: AppColors.primary,
-                onTap: () async {
-                  if (!_isCameraSupported) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Camera translation is not supported on macOS.',
-                        ),
-                      ),
-                    );
-                    return;
-                  }
-                  await _initializeAndStartTranslate(cameraProvider);
-                },
-              ),
-              const SizedBox(height: 16),
-              _buildTranslationModeCard(
-                context: context,
                 title: 'Gesture Recognition',
                 description:
                     'Real-time hand gesture recognition with AI feedback',

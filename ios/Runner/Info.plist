@@ -66,5 +66,23 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Kumpas uses the camera to recognize Filipino Sign Language gestures in real time.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Kumpas may record audio while practicing sign-language scenarios.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Kumpas may save sign-practice videos to your photo library.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- REPLACE with REVERSED_CLIENT_ID from GoogleService-Info.plist -->
+				<string>com.googleusercontent.apps.REPLACE_WITH_YOUR_REVERSED_CLIENT_ID</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -1,13 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'theme/app_theme.dart';
 import 'presentation/providers/app_state_provider.dart';
 import 'presentation/providers/camera_provider.dart';
 import 'presentation/providers/enhanced_camera_provider.dart';
-import 'presentation/screens/main_app_shell.dart';
+import 'presentation/screens/auth/auth_gate.dart';
+import 'services/auth_service.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint('Firebase init failed: $e');
+  }
   runApp(const MyApp());
 }
 
@@ -18,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => AppStateProvider()),
         ChangeNotifierProvider(create: (_) => CameraProvider()),
         ChangeNotifierProvider(create: (_) => EnhancedCameraProvider()),
@@ -28,7 +36,7 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        home: const MainAppShell(),
+        home: const AuthGate(),
       ),
     );
   }
