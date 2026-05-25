@@ -100,7 +100,7 @@ class HandJointPainter extends CustomPainter {
         // Use confidence to adjust opacity
         final opacity =
             ((start.confidence + end.confidence) / 2.0).clamp(0.3, 1.0);
-        linePaint.color = lineColor.withOpacity(opacity);
+        linePaint.color = lineColor.withValues(alpha: opacity);
 
         canvas.drawLine(startOffset, endOffset, linePaint);
       }
@@ -124,7 +124,7 @@ class HandJointPainter extends CustomPainter {
 
       // Use confidence to adjust joint appearance
       final opacity = joint.confidence.clamp(0.3, 1.0);
-      jointPaint.color = jointColor.withOpacity(opacity);
+      jointPaint.color = jointColor.withValues(alpha: opacity);
 
       // Draw filled circle
       canvas.drawCircle(offset, jointRadius, jointPaint);

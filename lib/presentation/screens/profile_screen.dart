@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primary.withOpacity(0.3),
+                          color: AppColors.primary.withValues(alpha: 0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -255,9 +255,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Column(
         children: [
@@ -372,28 +372,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Select Sign Language'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            RadioListTile(
-              title: const Text('Filipino Sign Language (FSL)'),
-              value: 'Filipino Sign Language (FSL)',
-              groupValue: _selectedLanguage,
-              onChanged: (value) {
-                setState(() => _selectedLanguage = value!);
-                Navigator.pop(context);
-              },
-            ),
-            RadioListTile(
-              title: const Text('American Sign Language (ASL)'),
-              value: 'American Sign Language (ASL)',
-              groupValue: _selectedLanguage,
-              onChanged: (value) {
-                setState(() => _selectedLanguage = value!);
-                Navigator.pop(context);
-              },
-            ),
-          ],
+        content: RadioGroup<String>(
+          groupValue: _selectedLanguage,
+          onChanged: (value) {
+            if (value != null) {
+              setState(() => _selectedLanguage = value);
+              Navigator.pop(context);
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              RadioListTile(
+                title: Text('Filipino Sign Language (FSL)'),
+                value: 'Filipino Sign Language (FSL)',
+              ),
+              RadioListTile(
+                title: Text('American Sign Language (ASL)'),
+                value: 'American Sign Language (ASL)',
+              ),
+            ],
+          ),
         ),
       ),
     );

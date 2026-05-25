@@ -27,6 +27,9 @@ dependencies:
   equatable: ^2.0.5
   http: ^1.6.0
 
+  # Video playback (dictionary sign demos)
+  video_player: ^2.9.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -34,3 +37,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/dictionary_videos/

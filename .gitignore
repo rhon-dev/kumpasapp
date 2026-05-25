@@ -7,6 +7,11 @@
 # ❌ EXCLUDES: Build artifacts, virtual envs, caches, OS files
 
 # ============================================================
+# ML training artifacts (too large for GitHub)
+# ============================================================
+ml_training/extracted_landmarks/landmarks_data.json
+
+# ============================================================
 # Python Development (ml_training/)
 # ============================================================
 # Virtual environments (user creates locally)

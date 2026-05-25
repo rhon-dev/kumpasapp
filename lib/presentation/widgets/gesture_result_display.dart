@@ -99,14 +99,14 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
   Widget _buildErrorDisplay() {
     return _StateCard(
       color: AppColors.errorLight,
-      borderColor: AppColors.error.withValues(alpha:0.3),
+      borderColor: AppColors.error.withValues(alpha: 0.3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.error.withValues(alpha:0.12),
+              color: AppColors.error.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(Icons.wifi_off_rounded,
@@ -132,7 +132,7 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: AppColors.error.withValues(alpha:0.8),
+                    color: AppColors.error.withValues(alpha: 0.8),
                     height: 1.4,
                   ),
                 ),
@@ -151,20 +151,19 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
   Widget _buildProcessingDisplay() {
     return _StateCard(
       color: AppColors.secondaryLight,
-      borderColor: AppColors.secondary.withValues(alpha:0.2),
-      child: Row(
+      borderColor: AppColors.secondary.withValues(alpha: 0.2),
+      child: const Row(
         children: [
           SizedBox(
             width: 20,
             height: 20,
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
-              valueColor:
-                  const AlwaysStoppedAnimation<Color>(AppColors.secondary),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
             ),
           ),
-          const SizedBox(width: 12),
-          const Text(
+          SizedBox(width: 12),
+          Text(
             'Analyzing gesture…',
             style: TextStyle(
               fontFamily: 'Inter',
@@ -179,15 +178,14 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
   }
 
   Widget _buildEmptyDisplay() {
-    return _StateCard(
+    return const _StateCard(
       color: AppColors.surface,
       borderColor: AppColors.borderLight,
       child: Column(
         children: [
-          Icon(Icons.back_hand_outlined,
-              size: 32, color: AppColors.textHint),
-          const SizedBox(height: 10),
-          const Text(
+          Icon(Icons.back_hand_outlined, size: 32, color: AppColors.textHint),
+          SizedBox(height: 10),
+          Text(
             'Show your hand to the camera',
             style: TextStyle(
               fontFamily: 'Inter',
@@ -196,8 +194,8 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
               color: AppColors.textSecondary,
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 4),
+          Text(
             'Hold a sign clearly in frame and tap Capture',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -229,7 +227,7 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
             border: Border.all(color: AppColors.borderLight),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha:0.06),
+                color: Colors.black.withValues(alpha: 0.06),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -244,7 +242,7 @@ class _GestureResultDisplayState extends State<GestureResultDisplay>
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha:0.1),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: const Text(
@@ -439,7 +437,7 @@ class _WarningChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.warningLight,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.warning.withValues(alpha:0.3)),
+        border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [

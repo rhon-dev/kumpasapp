@@ -1,5 +1,12 @@
+# MediaPipe Holistic (unified pose + hands + face)
 """
 Train gesture recognition model on extracted hand landmarks.
+
+Feature layout (1662 values per frame, produced by 1_extract_landmarks.py):
+  POSE_LEN  = 33  × 4 = 132   (x, y, z, visibility)
+  HAND_LEN  = 21  × 3 =  63   (x, y, z) — each hand
+  FACE_LEN  = 468 × 3 = 1404  (x, y, z)
+  N_FEATURES = 132 + 63 + 63 + 1404 = 1662
 
 Critical fixes vs v1:
   1. Data leakage removed: augmentation and scaler.fit happen ONLY on training
@@ -25,7 +32,23 @@ from sklearn.metrics import classification_report
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 LANDMARKS_FILE = os.path.join(SCRIPT_DIR, "extracted_landmarks", "landmarks_data.json")
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "models")
-SIGNS = ["HELLO", "HOW ARE YOU", "YES", "ONE", "TEN"]
+SIGNS = [
+    # Greetings (0-9)
+    "GOOD MORNING", "GOOD AFTERNOON", "GOOD EVENING", "HELLO", "HOW ARE YOU",
+    "IM FINE", "NICE TO MEET YOU", "THANK YOU", "YOURE WELCOME", "SEE YOU TOMORROW",
+    # Survival (10-19)
+    "UNDERSTAND", "DON'T UNDERSTAND", "KNOW", "DON'T KNOW", "NO",
+    "YES", "WRONG", "CORRECT", "SLOW", "FAST",
+    # Numbers (20-29)
+    "ONE", "TWO", "THREE", "FOUR", "FIVE",
+    "SIX", "SEVEN", "EIGHT", "NINE", "TEN",
+    # Days (42-51)
+    "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY",
+    "SATURDAY", "SUNDAY", "TODAY", "TOMORROW", "YESTERDAY",
+    # Family (52-61)
+    "FATHER", "MOTHER", "SON", "DAUGHTER", "GRANDFATHER",
+    "GRANDMOTHER", "UNCLE", "AUNTIE", "COUSIN", "PARENTS",
+]
 SEQUENCE_LENGTH = 30
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)

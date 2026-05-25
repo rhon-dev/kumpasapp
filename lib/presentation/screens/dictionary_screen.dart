@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kumpas/data/signs_catalog.dart';
+import 'package:kumpas/presentation/widgets/sign_video_sheet.dart';
 import 'package:kumpas/theme/app_theme.dart';
 
 class DictionaryScreen extends StatefulWidget {
@@ -12,58 +14,22 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   String _searchQuery = '';
   String _selectedCategory = 'All';
 
-  final List<String> categories = [
+  static const List<String> categories = [
     'All',
     'Greetings',
+    'Survival',
     'Numbers',
-    'Emotions',
-    'Daily Activities',
+    'Days',
     'Family',
-    'Food',
   ];
 
-  final List<Map<String, String>> dictionaryItems = [
-    {
-      'word': 'Hello',
-      'category': 'Greetings',
-      'pronunciation': 'Hag-AH-pap',
-    },
-    {
-      'word': 'Thank You',
-      'category': 'Greetings',
-      'pronunciation': 'MAR-sah-ming POW',
-    },
-    {
-      'word': 'One',
-      'category': 'Numbers',
-      'pronunciation': 'Eee-SAH',
-    },
-    {
-      'word': 'Two',
-      'category': 'Numbers',
-      'pronunciation': 'Dah-WAH',
-    },
-    {
-      'word': 'Happy',
-      'category': 'Emotions',
-      'pronunciation': 'Mah-YAH',
-    },
-    {
-      'word': 'Sad',
-      'category': 'Emotions',
-      'pronunciation': 'Loon-GOH',
-    },
-  ];
-
-  List<Map<String, String>> get filteredItems {
-    return dictionaryItems.where((item) {
-      final matchesSearch =
-          item['word']!.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              item['pronunciation']!
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase());
+  List<Sign> get filteredItems {
+    final q = _searchQuery.toLowerCase();
+    return kSignCatalog.where((s) {
+      final matchesSearch = s.word.toLowerCase().contains(q) ||
+          s.pronunciation.toLowerCase().contains(q);
       final matchesCategory =
-          _selectedCategory == 'All' || item['category'] == _selectedCategory;
+          _selectedCategory == 'All' || s.category == _selectedCategory;
       return matchesSearch && matchesCategory;
     }).toList();
   }
@@ -82,7 +48,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Search bar
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.surface,
@@ -107,8 +72,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Category filter
               SizedBox(
                 height: 40,
                 child: ListView.builder(
@@ -126,7 +89,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                         label: Text(category),
                         selected: isSelected,
                         backgroundColor: Colors.transparent,
-                        selectedColor: AppColors.primary.withOpacity(0.2),
+                        selectedColor: AppColors.primary.withValues(alpha: 0.2),
                         side: BorderSide(
                           color: isSelected
                               ? AppColors.primary
@@ -146,8 +109,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Dictionary items
               if (filteredItems.isEmpty)
                 Center(
                   child: Padding(
@@ -172,10 +133,10 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 )
               else
                 Column(
-                  children: filteredItems.map((item) {
+                  children: filteredItems.map((sign) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: _buildDictionaryItem(context, item),
+                      child: _buildDictionaryItem(context, sign),
                     );
                   }).toList(),
                 ),
@@ -186,76 +147,69 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     );
   }
 
-  Widget _buildDictionaryItem(
-    BuildContext context,
-    Map<String, String> item,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.borderLight),
-      ),
-      child: Row(
-        children: [
-          // Video/Sign thumbnail
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
+  Widget _buildDictionaryItem(BuildContext context, Sign sign) {
+    return InkWell(
+      onTap: () => SignVideoSheet.show(context, sign),
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.borderLight),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.videocam_outlined,
+                color: AppColors.primary,
+                size: 32,
+              ),
             ),
-            child: const Icon(
-              Icons.videocam_outlined,
-              color: AppColors.primary,
-              size: 32,
-            ),
-          ),
-          const SizedBox(width: 12),
-
-          // Content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item['word']!,
-                  style: AppTypography.titleMedium(context),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  item['pronunciation']!,
-                  style: AppTypography.labelSmall(context).copyWith(
-                    color: AppColors.textSecondary,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Chip(
-                  label: Text(
-                    item['category']!,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(sign.word, style: AppTypography.titleMedium(context)),
+                  const SizedBox(height: 4),
+                  Text(
+                    sign.pronunciation,
                     style: AppTypography.labelSmall(context).copyWith(
-                      color: AppColors.primary,
+                      color: AppColors.textSecondary,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
-                  backgroundColor: AppColors.primary.withOpacity(0.1),
-                  padding: EdgeInsets.zero,
-                  labelPadding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Chip(
+                    label: Text(
+                      sign.category,
+                      style: AppTypography.labelSmall(context).copyWith(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                    padding: EdgeInsets.zero,
+                    labelPadding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  ),
+                ],
+              ),
             ),
-          ),
-
-          // Action button
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.play_arrow_outlined),
-            color: AppColors.primary,
-          ),
-        ],
+            IconButton(
+              onPressed: () => SignVideoSheet.show(context, sign),
+              icon: const Icon(Icons.play_arrow_outlined),
+              color: AppColors.primary,
+            ),
+          ],
+        ),
       ),
     );
   }

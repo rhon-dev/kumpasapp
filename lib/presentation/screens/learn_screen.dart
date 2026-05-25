@@ -146,7 +146,7 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
                       Icon(
                         Icons.videocam_outlined,
                         size: 64,
-                        color: AppColors.primary.withOpacity(0.3),
+                        color: AppColors.primary.withValues(alpha: 0.3),
                       ),
                       FloatingActionButton(
                         onPressed: () {},
@@ -184,9 +184,9 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
                           color: AppColors.primary,
                         ),
                       ),
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                       side: BorderSide(
-                        color: AppColors.primary.withOpacity(0.3),
+                        color: AppColors.primary.withValues(alpha: 0.3),
                       ),
                     );
                   }).toList(),
@@ -283,7 +283,7 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4),
+                      color: Colors.black.withValues(alpha: 0.4),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: IconButton(
@@ -306,7 +306,7 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Text(
@@ -324,7 +324,7 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
                     height: 40,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.4),
+                        color: Colors.black.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(
@@ -347,7 +347,7 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
           right: 0,
           child: SafeArea(
             child: Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
@@ -356,14 +356,14 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
                     width: double.infinity,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(2),
                     ),
                     child: LinearProgressIndicator(
                       value: 0.65,
                       backgroundColor: Colors.transparent,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.primary.withOpacity(0.8),
+                        AppColors.primary.withValues(alpha: 0.8),
                       ),
                     ),
                   ),
@@ -413,7 +413,7 @@ class _LearnScreenState extends State<LearnScreen> with WidgetsBindingObserver {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.9),
+              color: AppColors.primary.withValues(alpha: 0.9),
               shape: BoxShape.circle,
             ),
             child: Icon(

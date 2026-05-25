@@ -54,7 +54,7 @@ class CameraFeedbackOverlay extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
+                  color: Colors.black.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -125,11 +125,11 @@ class CameraFeedbackOverlay extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: AppColors.primary.withOpacity(0.7),
+            color: AppColors.primary.withValues(alpha: 0.7),
             width: 3,
           ),
           left: BorderSide(
-            color: AppColors.primary.withOpacity(0.7),
+            color: AppColors.primary.withValues(alpha: 0.7),
             width: 3,
           ),
         ),
@@ -162,7 +162,7 @@ class LandmarksPainter extends CustomPainter {
           Offset(x, y),
           8,
           Paint()
-            ..color = AppColors.primary.withOpacity(visibility)
+            ..color = AppColors.primary.withValues(alpha: visibility)
             ..style = PaintingStyle.fill,
         );
 
@@ -171,7 +171,7 @@ class LandmarksPainter extends CustomPainter {
           Offset(x, y),
           8,
           Paint()
-            ..color = Colors.white.withOpacity(visibility)
+            ..color = Colors.white.withValues(alpha: visibility)
             ..style = PaintingStyle.stroke
             ..strokeWidth = 2,
         );
@@ -221,7 +221,7 @@ class LandmarksPainter extends CustomPainter {
             Offset(from.x * size.width, from.y * size.height),
             Offset(to.x * size.width, to.y * size.height),
             Paint()
-              ..color = AppColors.primary.withOpacity(0.6)
+              ..color = AppColors.primary.withValues(alpha: 0.6)
               ..strokeWidth = 3,
           );
         }
@@ -285,7 +285,7 @@ class _FeedbackBannerState extends State<FeedbackBanner>
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: backgroundColor.withOpacity(0.95),
+          color: backgroundColor.withValues(alpha: 0.95),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: backgroundColor,
@@ -293,7 +293,7 @@ class _FeedbackBannerState extends State<FeedbackBanner>
           ),
           boxShadow: [
             BoxShadow(
-              color: backgroundColor.withOpacity(0.3),
+              color: backgroundColor.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -319,7 +319,7 @@ class _FeedbackBannerState extends State<FeedbackBanner>
             Text(
               '${(widget.feedback.confidence * 100).toStringAsFixed(0)}%',
               style: TextStyle(
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withValues(alpha: 0.8),
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
               ),
